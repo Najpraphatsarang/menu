@@ -10,6 +10,20 @@ export const createUser = async (data: Prisma.UserCreateInput) =>{
         data:{...data,password:hashedPassword}})
 }
 
-export const findUser = async (where: Prisma.UserWhereInput) => {
+export const findUsers = async (where: Prisma.UserWhereInput) => {
     return await prisma.user.findMany({where, select: {id:true, username:true,branch: true}});
 };
+
+export const loginUser = async (where : Prisma.UserWhereUniqueInput) =>{
+    return await prisma.user.findUnique({
+        where,
+        select: {id: true,username:true,branch:true,password:true},
+    });
+}
+
+export const findUser = async (where : Prisma.UserWhereUniqueInput) =>{
+    return await prisma.user.findUnique({
+        where,
+        select: {id: true,username:true,branch:true},
+    });
+}
